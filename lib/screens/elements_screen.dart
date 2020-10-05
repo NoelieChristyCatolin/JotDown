@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:jot_down/screens/add_list_screen.dart';
 
-class ElementsScreen extends StatelessWidget {
+class ElementsScreen extends StatefulWidget {
   static String id = "elements_screen";
+
+  @override
+  _ElementsScreenState createState() => _ElementsScreenState();
+}
+
+class _ElementsScreenState extends State<ElementsScreen> {
   final List<String> list = ["egg", "oil"];
 
   @override
@@ -38,7 +44,11 @@ class ElementsScreen extends StatelessWidget {
               ],
             ),
             onTap: (){
-              showModalBottomSheet(context: context, builder: (context)=> AddListScreen());
+              showModalBottomSheet(context: context, builder: (context)=> AddListScreen(addNewListCallback: (newItem){
+                setState(() {
+                  list.add(newItem);
+                });
+              },));
             },
           )
         ],

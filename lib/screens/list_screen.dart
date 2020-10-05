@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:jot_down/screens/add_list_screen.dart';
 import 'package:jot_down/screens/elements_screen.dart';
 
-class ListScreen extends StatelessWidget {
+class ListScreen extends StatefulWidget {
   static String id = "list_screen";
+
+  @override
+  _ListScreenState createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
   final List<String> lists = ["pancit", "ice candy", "brownies"];
 
   @override
@@ -35,7 +41,11 @@ class ListScreen extends StatelessWidget {
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
         onPressed: (){
-          showModalBottomSheet(context: context, builder: (context)=> AddListScreen());
+          showModalBottomSheet(context: context, builder: (context)=> AddListScreen(addNewListCallback: (newList){
+            setState((){
+              lists.add(newList);
+            });
+          }),);
         },
       ),
     );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AddListScreen extends StatelessWidget {
+class AddElementScreen extends StatelessWidget {
   static String id = "add_list_screen";
   String newList;
-  final Function(String name) addNewListCallback;
+  final Function(String name) addNewElementCallback;
 
-  AddListScreen({this.addNewListCallback});
+  AddElementScreen({this.addNewElementCallback});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class AddListScreen extends StatelessWidget {
           ),
           FlatButton(onPressed: () {
             // TODO: Add list action
-            addNewListCallback(newList);
+            addNewElementCallback(newList);
             Navigator.pop(context);
           }, child: Text("Add"),)
         ],
