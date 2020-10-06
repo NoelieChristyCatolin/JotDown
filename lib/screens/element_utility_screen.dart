@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jot_down/models/jot_list_data.dart';
-import 'package:provider/provider.dart';
 
-class AddListScreen extends StatelessWidget {
+class ElementUtilityScreen extends StatelessWidget {
   static String id = "add_list_screen";
-  String newList;
+  final Function(String name) elementCallback;
+  String newElement;
+
+  ElementUtilityScreen({this.elementCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +15,17 @@ class AddListScreen extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text("Add New List"),
+          Text("Add New Element"),
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
             onChanged: (value){
-              newList = value;
+              newElement = value;
             },
           ),
           FlatButton(onPressed: () {
-
-            Provider.of<JotListData>(context, listen: false).addList(newList);
+            elementCallback(newElement);
             Navigator.pop(context);
-//            Navigator.pushNamed(context, ElementsScreen.id, arguments: ElementsScreen(listName: newList,));
-
           }, child: Text("Add"),)
         ],
       ),

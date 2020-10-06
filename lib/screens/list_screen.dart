@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jot_down/models/jot_list_data.dart';
-import 'package:jot_down/screens/add_list_screen.dart';
+import 'package:jot_down/screens/list_utility_screen.dart';
 import 'package:jot_down/screens/elements_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +12,7 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,6 @@ class _ListScreenState extends State<ListScreen> {
       body: Container(
         child:  ListView.builder(itemBuilder: (context, index){
           bool isChecked = true;
-          bool isVisible = true;
           return ListTile(
             leading: Text(
               Provider.of<JotListData>(context, listen: true).list[index].name,
@@ -34,20 +34,18 @@ class _ListScreenState extends State<ListScreen> {
             trailing: Checkbox(
               value: isChecked,
               onChanged: (value){
-//                setState(() {
-//                  print(value);
-//                  isChecked = value;
-//                });
               },
             ),
             onLongPress: (){
-//              setState(() {
-//                print("isVisible: ${isVisible}");
-//                isVisible = true;
-//              });
+              //TODO: define where to implement delete and update
+//              Provider.of<JotListData>(context, listen: false).deleteList(index);
+              showModalBottomSheet(context: context, builder: (context)=> ListUtilityScreen(listCallback: (list){
+                Provider.of<JotListData>(context, listen: false).editList(list, index);
+              },));
             },
             onTap: (){
-              Navigator.pushNamed(context, ElementsScreen.id,arguments: ElementsScreen(index: index));
+              var list = Provider.of<JotListData>(context, listen: false).list[index];
+              Navigator.pushNamed(context, ElementsScreen.id,arguments: ElementsScreen(index: index, jotList: list));
             },
           );
         },
@@ -57,7 +55,9 @@ class _ListScreenState extends State<ListScreen> {
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
         onPressed: (){
-          showModalBottomSheet(context: context, builder: (context)=> AddListScreen());
+          showModalBottomSheet(context: context, builder: (context)=> ListUtilityScreen(listCallback: (list){
+            Provider.of<JotListData>(context, listen: false).addList(list);
+          },));
         },
       ),
     );
