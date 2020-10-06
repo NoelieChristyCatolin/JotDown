@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jot_down/screens/add_list_screen.dart';
 import 'package:jot_down/screens/elements_screen.dart';
+import 'package:jot_down/models/jot_list.dart';
 
 class ListScreen extends StatefulWidget {
   static String id = "list_screen";
@@ -10,10 +11,14 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  final List<String> lists = ["pancit", "ice candy", "brownies"];
+  final List<JotList> lists = [JotList(name: "kare-kare", elements: ["pork, nuts"])];
 
   @override
   Widget build(BuildContext context) {
+
+    setState(() {
+
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text("Jot Down")
@@ -21,17 +26,33 @@ class _ListScreenState extends State<ListScreen> {
       backgroundColor: Colors.white,
       body: Container(
         child:  ListView.builder(itemBuilder: (context, index){
+          bool isChecked = true;
+          bool isVisible = true;
           return ListTile(
-            title: Text(
-              lists[index],
+            leading: Text(
+              lists[index].name,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.lightBlueAccent,
               ),
-
             ),
+            trailing: Checkbox(
+              value: isChecked,
+              onChanged: (value){
+                setState(() {
+                  print(value);
+                  isChecked = value;
+                });
+              },
+            ),
+            onLongPress: (){
+              setState(() {
+                print("isVisible: ${isVisible}");
+                isVisible = true;
+              });
+            },
             onTap: (){
-              Navigator.pushNamed(context, ElementsScreen.id);
+              Navigator.pushNamed(context, ElementsScreen.id,arguments: ElementsScreen(list: lists[index]));
             },
           );
         },
@@ -41,11 +62,7 @@ class _ListScreenState extends State<ListScreen> {
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
         onPressed: (){
-          showModalBottomSheet(context: context, builder: (context)=> AddListScreen(addNewListCallback: (newList){
-            setState((){
-              lists.add(newList);
-            });
-          }),);
+          showModalBottomSheet(context: context, builder: (context)=> AddListScreen());
         },
       ),
     );
