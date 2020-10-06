@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jot_down/models/jot_list_data.dart';
 import 'package:jot_down/screens/add_list_screen.dart';
 import 'package:jot_down/screens/elements_screen.dart';
-import 'package:jot_down/models/jot_list.dart';
+import 'package:provider/provider.dart';
 
 class ListScreen extends StatefulWidget {
   static String id = "list_screen";
@@ -11,14 +12,8 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  final List<JotList> lists = [JotList(name: "kare-kare", elements: ["pork, nuts"])];
-
   @override
   Widget build(BuildContext context) {
-
-    setState(() {
-
-    });
     return Scaffold(
       appBar: AppBar(
         title: Text("Jot Down")
@@ -30,7 +25,7 @@ class _ListScreenState extends State<ListScreen> {
           bool isVisible = true;
           return ListTile(
             leading: Text(
-              lists[index].name,
+              Provider.of<JotListData>(context, listen: true).list[index].name,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.lightBlueAccent,
@@ -39,24 +34,24 @@ class _ListScreenState extends State<ListScreen> {
             trailing: Checkbox(
               value: isChecked,
               onChanged: (value){
-                setState(() {
-                  print(value);
-                  isChecked = value;
-                });
+//                setState(() {
+//                  print(value);
+//                  isChecked = value;
+//                });
               },
             ),
             onLongPress: (){
-              setState(() {
-                print("isVisible: ${isVisible}");
-                isVisible = true;
-              });
+//              setState(() {
+//                print("isVisible: ${isVisible}");
+//                isVisible = true;
+//              });
             },
             onTap: (){
-              Navigator.pushNamed(context, ElementsScreen.id,arguments: ElementsScreen(list: lists[index]));
+              Navigator.pushNamed(context, ElementsScreen.id,arguments: ElementsScreen(index: index));
             },
           );
         },
-        itemCount: lists.length,)
+        itemCount: Provider.of<JotListData>(context, listen: true).count,)
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,

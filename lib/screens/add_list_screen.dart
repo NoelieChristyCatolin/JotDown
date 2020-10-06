@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jot_down/models/jot_list.dart';
-import 'package:jot_down/screens/elements_screen.dart';
+import 'package:jot_down/models/jot_list_data.dart';
+import 'package:provider/provider.dart';
 
 class AddListScreen extends StatelessWidget {
   static String id = "add_list_screen";
@@ -23,8 +23,10 @@ class AddListScreen extends StatelessWidget {
             },
           ),
           FlatButton(onPressed: () {
+
+            Provider.of<JotListData>(context, listen: false).addList(newList);
             Navigator.pop(context);
-            Navigator.pushNamed(context, ElementsScreen.id, arguments: ElementsScreen(list: JotList(name: newList, elements: []),));
+//            Navigator.pushNamed(context, ElementsScreen.id, arguments: ElementsScreen(listName: newList,));
 
           }, child: Text("Add"),)
         ],

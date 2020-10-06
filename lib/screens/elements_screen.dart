@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:jot_down/models/jot_list.dart';
+import 'package:jot_down/models/jot_list_data.dart';
 import 'package:jot_down/screens/add_element_screen.dart';
-import 'package:jot_down/screens/add_list_screen.dart';
-import 'package:jot_down/screens/list_screen.dart';
+import 'package:provider/provider.dart';
 
 class ElementsScreen extends StatefulWidget {
   static String id = "elements_screen";
-  JotList list;
-  final Function(JotList newList) addNewJotListCallback;
 
-  ElementsScreen({this.list, this.addNewJotListCallback});
+  int index;
+  List<JotList> lists = [];
+
+
+  ElementsScreen({this.index});
 
   @override
   _ElementsScreenState createState() => _ElementsScreenState();
@@ -20,16 +22,16 @@ class _ElementsScreenState extends State<ElementsScreen> {
   @override
   Widget build(BuildContext context) {
     final ElementsScreen args = ModalRoute.of(context).settings.arguments;
-    widget.list = args.list;
+//    JotList list = Provider.of<JotListData>(context,listen: true).list[args.index];
     return Scaffold(
       appBar: AppBar(
-          title: Text(widget.list.name + "(${widget.list.elements.length})"),
-        leading: FlatButton(
-          child: Text("Delete"),
-          onPressed: (){
-              //add delete
-          },
-        ),
+          title: Text(Provider.of<JotListData>(context,listen: true).list[args.index].name + "(${Provider.of<JotListData>(context,listen: true).list[args.index].elements.length})"),
+//        leading: FlatButton(
+//          child: Text("Delete"),
+//          onPressed: (){
+//              //add delete
+//          },
+//        ),
       ),
       body: Container(
         child: Column(
@@ -39,14 +41,14 @@ class _ElementsScreenState extends State<ElementsScreen> {
                 itemBuilder: (context, index){
                   bool isChecked = false;
                   return ListTile(
-                    title: Text(widget.list.elements[index]),
+                    title: Text(Provider.of<JotListData>(context,listen: true).list[args.index].elements[index]),
                     trailing: Checkbox(
                       value: isChecked,
                       onChanged: (value){
-                      setState(() {
-                        print(value);
-                        isChecked = value;
-                      });
+//                      setState(() {
+//                        print(value);
+//                        isChecked = value;
+//                      });
                       },
                       activeColor: Colors.lightBlueAccent,
                     ),
@@ -54,7 +56,7 @@ class _ElementsScreenState extends State<ElementsScreen> {
 
                   );
                 },
-                itemCount: widget.list.elements.length,
+                itemCount: Provider.of<JotListData>(context,listen: true).list[args.index].elements.length,
               ),
             ),
             Row(
@@ -63,9 +65,7 @@ class _ElementsScreenState extends State<ElementsScreen> {
                     onPressed: (){
                       showModalBottomSheet(context: context, builder: (context)=> AddElementScreen(
                         addNewElementCallback: (newElement){
-                          setState(() {
-                            widget.list.elements.add(newElement);
-                          });
+                          Provider.of<JotListData>(context, listen: false).addElement(newElement, args.index);
                         },
                       ));
                     },
@@ -75,6 +75,7 @@ class _ElementsScreenState extends State<ElementsScreen> {
                 FlatButton.icon(
                     onPressed: (){
                       //todo pass data. probably change to provider
+                      print("success");
                       Navigator.pop(context);
                     },
                     icon: Icon(Icons.save),
