@@ -21,6 +21,7 @@ class _ElementsScreenState extends State<ElementsScreen> {
   @override
   Widget build(BuildContext context) {
     final ElementsScreen args = ModalRoute.of(context).settings.arguments;
+    JotList list = Provider.of<JotListData>(context, listen: true).list[args.index];
     widget.jotList = args.jotList;
     return Scaffold(
       appBar: AppBar(
@@ -35,13 +36,13 @@ class _ElementsScreenState extends State<ElementsScreen> {
                   return ListTile(
                     title: Text(Provider.of<JotListData>(context,listen: true).list[args.index].elements[index]),
                     onLongPress: (){
-                      Provider.of<JotListData>(context, listen: false).deleteElement(index, args.index);
+                      Provider.of<JotListData>(context, listen: false).deleteElement(index, list);
                     },
                     onTap: (){
                       showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
                         elementCallback: (element){
                           //todo edit
-                          Provider.of<JotListData>(context, listen: false).editElement(element, index, args.index);
+                          Provider.of<JotListData>(context, listen: false).editElement(element, index, list);
                         },
                       ));
                     },
@@ -57,7 +58,7 @@ class _ElementsScreenState extends State<ElementsScreen> {
                     onPressed: (){
                       showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
                         elementCallback: (element){
-                          Provider.of<JotListData>(context, listen: false).addElement(element, args.index);
+                          Provider.of<JotListData>(context, listen: false).addElement(element, list);
                         },
                       ));
                     },

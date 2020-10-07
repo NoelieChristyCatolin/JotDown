@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jot_down/models/jot_list.dart';
 import 'package:jot_down/models/jot_list_data.dart';
 import 'package:jot_down/screens/list_utility_screen.dart';
 import 'package:jot_down/screens/elements_screen.dart';
@@ -23,6 +24,7 @@ class _ListScreenState extends State<ListScreen> {
       body: Container(
         child:  ListView.builder(itemBuilder: (context, index){
           bool isChecked = true;
+          JotList list = Provider.of<JotListData>(context, listen: true).list[index];
           return ListTile(
             leading: Text(
               Provider.of<JotListData>(context, listen: true).list[index].name,
@@ -38,9 +40,10 @@ class _ListScreenState extends State<ListScreen> {
             ),
             onLongPress: (){
               //TODO: define where to implement delete and update
-//              Provider.of<JotListData>(context, listen: false).deleteList(index);
-              showModalBottomSheet(context: context, builder: (context)=> ListUtilityScreen(listCallback: (list){
-                Provider.of<JotListData>(context, listen: false).editList(list, index);
+
+//              Provider.of<JotListData>(context, listen: false).deleteList(list);
+              showModalBottomSheet(context: context, builder: (context)=> ListUtilityScreen(listCallback: (newName){
+                Provider.of<JotListData>(context, listen: false).editList(newName, list);
               },));
             },
             onTap: (){
