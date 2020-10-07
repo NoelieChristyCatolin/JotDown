@@ -22,7 +22,6 @@ class _ElementsScreenState extends State<ElementsScreen> {
   Widget build(BuildContext context) {
     final ElementsScreen args = ModalRoute.of(context).settings.arguments;
     widget.jotList = args.jotList;
-    print(widget.jotList.name);
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.jotList.name),

@@ -56,7 +56,7 @@ class _ListScreenState extends State<ListScreen> {
         child: Icon(Icons.add),
         onPressed: (){
           showModalBottomSheet(context: context, builder: (context)=> ListUtilityScreen(listCallback: (list){
-            Provider.of<JotListData>(context, listen: false).addList(list);
+            Provider.of<JotListData>(context, listen: false).createList(list);
           },));
         },
       ),
