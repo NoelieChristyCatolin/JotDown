@@ -9,26 +9,24 @@ class ListUtilityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 15,
-          ),
-          Text("Enter List Name"),
-          TextField(
-            autofocus: true,
-            textAlign: TextAlign.center,
-            onChanged: (value){
-              newList = value;
-            },
-          ),
-          FlatButton(onPressed: () {
-            listCallback(newList);
-            Navigator.pop(context);
-          }, child: Text("Set"),)
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 15,
+        ),
+        Text("Enter List Name"),
+        TextField(
+          autofocus: true,
+          textAlign: TextAlign.center,
+          onChanged: (value){
+            newList = value;
+          },
+        ),
+        FlatButton(onPressed: () {
+          listCallback(newList);
+          Navigator.pop(context);
+        }, child: Text("Set"),)
+      ],
     );
   }
 }

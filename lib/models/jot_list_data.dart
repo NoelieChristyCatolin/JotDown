@@ -48,7 +48,7 @@ class JotListData extends ChangeNotifier{
      db.editList(list);
     loadList();
   }
-  
+
   void addElement(String element, JotList list){
     list.elements.add(element);
     db.saveElements(list);

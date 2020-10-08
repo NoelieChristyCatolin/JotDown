@@ -16,15 +16,22 @@ class ElementsScreen extends StatelessWidget{
     JotList list = Provider.of<JotListData>(context, listen: true).list[args.index];
     return Scaffold(
       appBar: AppBar(
-          title: Text(list.name),
+        title: Text(
+          list.name,
+          style: TextStyle(
+            color: Colors.green
+          ),
+        ),
+        backgroundColor: Colors.white54,
       ),
       body: Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(
               child: ListView.separated(
                 separatorBuilder: (context, index) => Divider(
-                  color: Colors.white30,
+                  color: Colors.black12,
                 ),
                 itemBuilder: (context, index){
                   return ListTile(
@@ -61,33 +68,27 @@ class ElementsScreen extends StatelessWidget{
                 itemCount: Provider.of<JotListData>(context,listen: true).list[args.index].elements.length,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: FlatButton.icon(
-                      onPressed: (){
-                        showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
-                          elementCallback: (element){
-                            Provider.of<JotListData>(context, listen: false).addElement(element, list);
+            FlatButton.icon(
+                onPressed: (){
+                  showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
+                    elementCallback: (element){
+                      Provider.of<JotListData>(context, listen: false).addElement(element, list);
 //                            Provider.of<JotListData>(context, listen: false).newElement(element, args.index);
-                          },
-                        ));
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.blue,
-                      ),
-                      label: Text(
-                          "Add Element",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                      )
-                  ),
+                    },
+                  ));
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.green,
                 ),
-              ],
+                label: Text(
+                    "Add Element",
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                )
             ),
+            SizedBox(height: 30,)
           ],
         ),
       ),

@@ -12,12 +12,18 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Jot Down"),
+        title: Text(
+          "Jot Down",
+          style: TextStyle(
+              color: Colors.green
+          ),
+        ),
+        backgroundColor: Colors.white54,
       ),
       body: Container(
         child:  ListView.separated(
           separatorBuilder: (context, index) => Divider(
-            color: Colors.white38,
+            color: Colors.black12,
           ),
           itemBuilder: (context, index){
             JotList list = Provider.of<JotListData>(context, listen: true).list[index];
