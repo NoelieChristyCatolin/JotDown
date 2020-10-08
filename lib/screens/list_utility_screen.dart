@@ -15,7 +15,7 @@ class ListUtilityScreen extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text("Add New List"),
+          Text("Enter List Name"),
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
@@ -26,7 +26,7 @@ class ListUtilityScreen extends StatelessWidget {
           FlatButton(onPressed: () {
             listCallback(newList);
             Navigator.pop(context);
-          }, child: Text("Add"),)
+          }, child: Text("Set"),)
         ],
       ),
     );

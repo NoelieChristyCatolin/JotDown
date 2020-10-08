@@ -15,7 +15,7 @@ class ElementUtilityScreen extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text("Add New Element"),
+          Text("Enter element name"),
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
@@ -26,7 +26,7 @@ class ElementUtilityScreen extends StatelessWidget {
           FlatButton(onPressed: () {
             elementCallback(newElement);
             Navigator.pop(context);
-          }, child: Text("Add"),)
+          }, child: Text("Set"),)
         ],
       ),
     );

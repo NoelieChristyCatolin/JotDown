@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jot_down/models/jot_list.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-final _firestore = FirebaseFirestore.instance;
-final collectionName = "JotList";
+import 'package:jot_down/services/database.dart';
 
 class JotListData extends ChangeNotifier{
+  Database db = Database();
 
   List<JotList> _list = [];
+  List<String> tempNewElements = [];
 
   JotListData()  {
     loadList();
@@ -22,70 +21,50 @@ class JotListData extends ChangeNotifier{
     return _list;
   }
 
+  Future loadList() async{
+    _list = await db.fetchData();
+    notifyListeners();
+  }
+
+  void isDone(bool isDone,JotList list){
+    list.isDone = isDone;
+    db.isDone(list);
+    loadList();
+  }
+
   void createList(String list) {
-    JotList newList = JotList(name: list,elements: []);
-     _firestore.collection(collectionName).add(newList.toMap());
+    JotList newList = JotList(name: list,elements: [], isDone: false);
+    db.createList(newList);
     loadList();
   }
 
   void deleteList(JotList list) {
-     _firestore.collection(collectionName).doc(list.id).delete();
+     db.deleteList(list);
      loadList();
   }
 
   void editList(String newName,JotList list) {
     list.name = newName;
-     _firestore.collection(collectionName).doc(list.id).update(list.toMap());
+     db.editList(list);
     loadList();
   }
-
-  void addElement(String newElement, JotList list) {
-    list.elements.add(newElement);
-     _firestore.collection(collectionName).doc(list.id).update(list.toMap());
+  
+  void addElement(String element, JotList list){
+    list.elements.add(element);
+    db.saveElements(list);
     loadList();
   }
 
   void editElement(String newElement, int index, JotList list){
     list.elements[index] = newElement;
-     _firestore.collection(collectionName).doc(list.id).update(list.toMap());
+     db.editElement(list);
     loadList();
   }
 
   void deleteElement(int index, JotList list)  {
     list.elements.removeAt(index);
-    
-     _firestore.collection(collectionName).doc(list.id).update(list.toMap());
+    db.deleteElement(list);
     loadList();
-  }
-
-  void loadList(){
-    fetchData().then((value) {
-      _list = value;
-      print(_list.length);
-      notifyListeners();
-    });
-  }
-
-  List<String> toListString(List<dynamic> list) {
-    List<String> newList = [];
-    list.forEach((element) {
-        newList.add(element);
-    });
-    return newList;
-  }
-
-  Future<List<JotList>> fetchData() async{
-    List<JotList> list =[];
-     await _firestore.collection(collectionName)
-        .get()
-        .then((QuerySnapshot querySnapshot) =>  {
-          querySnapshot.docs.forEach((doc) {
-            list.add(JotList(id: doc.id ,name:doc.data()['name'] , elements: toListString(doc.data()['elements'])));
-          })
-
-        });
-    return list;
-
   }
 
 }
