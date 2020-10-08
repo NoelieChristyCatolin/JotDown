@@ -31,7 +31,7 @@ class ElementsScreen extends StatelessWidget{
             Expanded(
               child: ListView.separated(
                 separatorBuilder: (context, index) => Divider(
-                  color: Colors.white30,
+                  color: Colors.black12,
                 ),
                 itemBuilder: (context, index){
                   return ListTile(

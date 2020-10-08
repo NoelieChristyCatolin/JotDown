@@ -20,11 +20,10 @@ class ListScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.white54,
       ),
-//      backgroundColor: Colors.white54,
       body: Container(
         child:  ListView.separated(
           separatorBuilder: (context, index) => Divider(
-            color: Colors.white38,
+            color: Colors.black12,
           ),
           itemBuilder: (context, index){
             JotList list = Provider.of<JotListData>(context, listen: true).list[index];
