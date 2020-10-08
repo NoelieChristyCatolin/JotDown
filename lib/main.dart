@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       create: (context) => JotListData(),
       child: MaterialApp(
         title: 'Jot Down',
-        theme: ThemeData.dark(),
+        theme: ThemeData.light(),
         initialRoute: ListScreen.id,
         routes: {
           ListScreen.id : (context) => ListScreen(),

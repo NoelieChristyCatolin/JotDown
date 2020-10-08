@@ -12,8 +12,15 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Jot Down"),
+        title: Text(
+          "Jot Down",
+          style: TextStyle(
+              color: Colors.green
+          ),
+        ),
+        backgroundColor: Colors.white54,
       ),
+//      backgroundColor: Colors.white54,
       body: Container(
         child:  ListView.separated(
           separatorBuilder: (context, index) => Divider(
