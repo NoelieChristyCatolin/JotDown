@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AddListScreen extends StatelessWidget {
+class ListUtilityScreen extends StatelessWidget {
   static String id = "add_list_screen";
+  final Function(String name) listCallback;
+  String newList;
+
+  ListUtilityScreen({this.listCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +15,18 @@ class AddListScreen extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text("Add New List"),
+          Text("Enter List Name"),
           TextField(
             autofocus: true,
             textAlign: TextAlign.center,
             onChanged: (value){
-              // TODO:  add update string action
+              newList = value;
             },
           ),
           FlatButton(onPressed: () {
-            // TODO: Add list action
+            listCallback(newList);
             Navigator.pop(context);
-          }, child: Text("Add"),)
+          }, child: Text("Set"),)
         ],
       ),
     );
