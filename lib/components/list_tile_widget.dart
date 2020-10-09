@@ -29,7 +29,7 @@ class ListTileWidget extends StatelessWidget {
                     .none,
               ),
             ),
-            Padding(
+            list.elements.isNotEmpty ? Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 '${Provider.of<JotListData>(context, listen: true).list[index].elements.length} items',
@@ -38,14 +38,9 @@ class ListTileWidget extends StatelessWidget {
                   fontSize: 10,
                 ),
               ),
-            ),
+            ) : SizedBox.shrink(),
           ],
         ),
-//      leading: Icon(
-//        Icons.list,
-//        size: 30,
-//        color: Colors.lightBlueAccent,
-//      ),
         trailing: GestureDetector(
           child: Icon(
             Icons.clear,
