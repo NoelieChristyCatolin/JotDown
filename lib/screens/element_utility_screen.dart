@@ -29,12 +29,16 @@ class ElementUtilityScreen extends StatelessWidget {
                 newElement = value;
               },
             ),
-            RaisedButton(onPressed: () {
-              if (newElement.isNotEmpty) {
-                elementCallback(newElement);
-                Navigator.pop(context);
-              }
-            }, child: Text("Set"),)
+            RaisedButton(
+              child: Text("Set"),
+              color: Colors.lightBlueAccent,
+              onPressed: () {
+                if (newElement.isNotEmpty) {
+                  elementCallback(newElement);
+                  Navigator.pop(context);
+                }
+              },
+            )
           ],
         ),
       ),

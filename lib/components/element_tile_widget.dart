@@ -21,33 +21,22 @@ class ElementTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         title: Text(Provider.of<JotListData>(context,listen: true).list[args.index].elements[index]),
-        trailing: Wrap(
-          spacing: 15,
-          children: [
-            GestureDetector(
-              child: Icon(
-                Icons.edit,
-                color: Colors.lightBlue,
-              ),
-              onTap: (){
-                showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
-                  elementCallback: (element){
-                    Provider.of<JotListData>(context, listen: false).editElement(element, index, list);
-                  },
-                ));
-              },
-
-            ),
-            GestureDetector(
-              child: Icon(
-                Icons.delete,
-                color: Colors.redAccent,
-              ),
-              onTap: (){
-                Provider.of<JotListData>(context, listen: false).deleteElement(index, list);
-              },
-            ),
-          ],)
+        onLongPress: (){
+          showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
+            elementCallback: (element){
+              Provider.of<JotListData>(context, listen: false).editElement(element, index, list);
+            },
+          ));
+        },
+        trailing: GestureDetector(
+          child: Icon(
+            Icons.delete,
+            color: Colors.redAccent,
+          ),
+          onTap: (){
+            Provider.of<JotListData>(context, listen: false).deleteElement(index, list);
+          },
+        )
     );
   }
 }
