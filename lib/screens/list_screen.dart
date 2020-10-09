@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jot_down/models/jot_list.dart';
 import 'package:jot_down/models/jot_list_data.dart';
 import 'package:jot_down/screens/list_utility_screen.dart';
-import 'package:jot_down/screens/elements_screen.dart';
+import 'package:jot_down/components/list_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class ListScreen extends StatelessWidget {
@@ -28,42 +28,7 @@ class ListScreen extends StatelessWidget {
           itemBuilder: (context, index){
             JotList list = Provider.of<JotListData>(context, listen: true).list[index];
             bool isSelected = list.isDone;
-            return ListTile(
-              title: Text(
-                Provider.of<JotListData>(context, listen: true).list[index].name,
-                style: TextStyle(
-                  color: isSelected ? Colors.white38 : null,
-                  decoration: isSelected ? TextDecoration.lineThrough : TextDecoration.none,
-                ),
-              ),
-              leading: Icon(
-                Icons.view_list,
-                size: 30,
-                color: Colors.lightBlueAccent,
-              ),
-              trailing: GestureDetector(
-                  child: Icon(
-                    Icons.clear,
-                    size: 15,
-                    color: Colors.redAccent,
-                  ),
-                  onTap: (){
-                    Provider.of<JotListData>(context, listen: false).isDone(true, list);
-                    Future.delayed(const Duration(milliseconds: 1500), () {
-                      Provider.of<JotListData>(context, listen: false).deleteList(list);
-                    });
-                  },
-              ),
-              onLongPress: (){
-                showModalBottomSheet(context: context, builder: (context)=> ListUtilityScreen(listCallback: (newName){
-                  Provider.of<JotListData>(context, listen: false).editList(newName, list);
-                },));
-              },
-              onTap: (){
-                var list = Provider.of<JotListData>(context, listen: false).list[index];
-                Navigator.pushNamed(context, ElementsScreen.id,arguments: ElementsScreen(index: index, jotList: list));
-              },
-            );
+            return ListTileWidget(isSelected: isSelected, list: list, index: index);
           },
           itemCount: Provider.of<JotListData>(context, listen: true).count,)
       ),

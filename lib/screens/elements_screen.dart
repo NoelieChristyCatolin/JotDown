@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jot_down/models/jot_list.dart';
 import 'package:jot_down/models/jot_list_data.dart';
 import 'package:jot_down/screens/element_utility_screen.dart';
+import 'package:jot_down/components/element_tile_widget.dart';
 import 'package:provider/provider.dart';
+
 
 class ElementsScreen extends StatelessWidget{
   static String id = "elements_screen";
@@ -34,36 +36,7 @@ class ElementsScreen extends StatelessWidget{
                   color: Colors.black12,
                 ),
                 itemBuilder: (context, index){
-                  return ListTile(
-                    title: Text(Provider.of<JotListData>(context,listen: true).list[args.index].elements[index]),
-                    trailing: Wrap(
-                      spacing: 15,
-                      children: [
-                        GestureDetector(
-                          child: Icon(
-                              Icons.edit,
-                              color: Colors.lightBlue,
-                          ),
-                          onTap: (){
-                            showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
-                              elementCallback: (element){
-                                Provider.of<JotListData>(context, listen: false).editElement(element, index, list);
-                              },
-                            ));
-                          },
-
-                        ),
-                        GestureDetector(
-                          child: Icon(
-                              Icons.delete,
-                              color: Colors.redAccent,
-                          ),
-                          onTap: (){
-                            Provider.of<JotListData>(context, listen: false).deleteElement(index, list);
-                          },
-                        ),
-                      ],)
-                  );
+                  return ElementTileWidget(args: args, index: index, list: list);
                 },
                 itemCount: Provider.of<JotListData>(context,listen: true).list[args.index].elements.length,
               ),
