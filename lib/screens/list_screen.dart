@@ -21,10 +21,7 @@ class ListScreen extends StatelessWidget {
         backgroundColor: Colors.white54,
       ),
       body: Container(
-        child:  ListView.separated(
-          separatorBuilder: (context, index) => Divider(
-            color: Colors.black12,
-          ),
+        child:  ListView.builder(
           itemBuilder: (context, index){
             JotList list = Provider.of<JotListData>(context, listen: true).list[index];
             bool isSelected = list.isDone;

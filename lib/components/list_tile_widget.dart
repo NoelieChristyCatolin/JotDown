@@ -14,64 +14,66 @@ class ListTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            Provider
-                .of<JotListData>(context, listen: true)
-                .list[index].name,
-            style: TextStyle(
-              color: isSelected ? Colors.white38 : null,
-              decoration: isSelected ? TextDecoration.lineThrough : TextDecoration
-                  .none,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(
-              '${Provider.of<JotListData>(context, listen: true).list[index].elements.length} items',
+    return Card(
+      child: ListTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              Provider
+                  .of<JotListData>(context, listen: true)
+                  .list[index].name,
               style: TextStyle(
-                color: isSelected ? Colors.white54 : null,
-                fontSize: 10,
+                color: isSelected ? Colors.white38 : null,
+                decoration: isSelected ? TextDecoration.lineThrough : TextDecoration
+                    .none,
               ),
             ),
-          ),
-        ],
-      ),
-      leading: Icon(
-        Icons.list,
-        size: 30,
-        color: Colors.lightBlueAccent,
-      ),
-      trailing: GestureDetector(
-        child: Icon(
-          Icons.clear,
-          size: 15,
-          color: Colors.redAccent,
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                '${Provider.of<JotListData>(context, listen: true).list[index].elements.length} items',
+                style: TextStyle(
+                  color: isSelected ? Colors.white54 : null,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+          ],
         ),
+//      leading: Icon(
+//        Icons.list,
+//        size: 30,
+//        color: Colors.lightBlueAccent,
+//      ),
+        trailing: GestureDetector(
+          child: Icon(
+            Icons.clear,
+            size: 15,
+            color: Colors.redAccent,
+          ),
+          onTap: () {
+            Provider.of<JotListData>(context, listen: false).isDone(true, list);
+            Future.delayed(const Duration(milliseconds: 1500), () {
+              Provider.of<JotListData>(context, listen: false).deleteList(list);
+            });
+          },
+        ),
+        onLongPress: () {
+          showModalBottomSheet(context: context, builder: (context) =>
+              ListUtilityScreen(listCallback: (newName) {
+                Provider.of<JotListData>(context, listen: false).editList(
+                    newName, list);
+              },));
+        },
         onTap: () {
-          Provider.of<JotListData>(context, listen: false).isDone(true, list);
-          Future.delayed(const Duration(milliseconds: 1500), () {
-            Provider.of<JotListData>(context, listen: false).deleteList(list);
-          });
+          var list = Provider
+              .of<JotListData>(context, listen: false)
+              .list[index];
+          Navigator.pushNamed(context, ElementsScreen.id,
+              arguments: ElementsScreen(index: index, jotList: list));
         },
       ),
-      onLongPress: () {
-        showModalBottomSheet(context: context, builder: (context) =>
-            ListUtilityScreen(listCallback: (newName) {
-              Provider.of<JotListData>(context, listen: false).editList(
-                  newName, list);
-            },));
-      },
-      onTap: () {
-        var list = Provider
-            .of<JotListData>(context, listen: false)
-            .list[index];
-        Navigator.pushNamed(context, ElementsScreen.id,
-            arguments: ElementsScreen(index: index, jotList: list));
-      },
     );
   }
 }
