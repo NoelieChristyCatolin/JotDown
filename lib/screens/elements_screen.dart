@@ -6,10 +6,10 @@ import 'package:jot_down/components/element_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 
-class ElementsScreen extends StatelessWidget{
+class ElementsScreen extends StatelessWidget {
   static String id = "elements_screen";
-  int index;
-  JotList jotList;
+  final int index;
+  final JotList jotList;
   ElementsScreen({this.index,this.jotList});
 
   @override
@@ -46,7 +46,6 @@ class ElementsScreen extends StatelessWidget{
                   showModalBottomSheet(context: context, builder: (context)=> ElementUtilityScreen(
                     elementCallback: (element){
                       Provider.of<JotListData>(context, listen: false).addElement(element, list);
-//                            Provider.of<JotListData>(context, listen: false).newElement(element, args.index);
                     },
                   ));
                 },

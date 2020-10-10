@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ListUtilityScreen extends StatelessWidget {
+class ListUtilityScreen extends StatefulWidget {
   static String id = "add_list_screen";
   final Function(String name) listCallback;
-  String newList;
 
   ListUtilityScreen({this.listCallback});
+
+  @override
+  _ListUtilityScreenState createState() => _ListUtilityScreenState();
+}
+
+class _ListUtilityScreenState extends State<ListUtilityScreen> {
+  String newList = '';
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,7 @@ class ListUtilityScreen extends StatelessWidget {
               color: Colors.lightBlueAccent,
               onPressed: () {
                 if (newList.isNotEmpty) {
-                  listCallback(newList);
+                  widget.listCallback(newList);
                   Navigator.pop(context);
                 }
               },
