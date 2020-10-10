@@ -24,7 +24,6 @@ class ListTileWidget extends StatelessWidget {
                   .of<JotListData>(context, listen: true)
                   .list[index].name,
               style: TextStyle(
-                color: isSelected ? Colors.white38 : null,
                 decoration: isSelected ? TextDecoration.lineThrough : TextDecoration
                     .none,
               ),
